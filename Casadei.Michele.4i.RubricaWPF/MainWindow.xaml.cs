@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace Casadei.Michele._4i.RubricaWPF
 {
@@ -30,7 +31,7 @@ namespace Casadei.Michele._4i.RubricaWPF
                     Contatti[i] = new Contatto();
 
                 }
-                StreamReader fin = new StreamReader("dati.csv");
+                StreamReader fin = new StreamReader("Dati.csv");
                 int idx = 0;
                 while (!fin.EndOfStream)
                 {
@@ -47,14 +48,20 @@ namespace Casadei.Michele._4i.RubricaWPF
         }
 
         private void dgDati_LoadingRow(object sender, DataGridRowEventArgs e)
-        {
+       {
             Contatto c = e.Row.Item as Contatto;
             if (c != null)
             {
                 if (c.Pk == 0)
                 {
+                    // Se la chiave primaria è 0, colora la riga di rosso
                     e.Row.Background = Brushes.Red;
                     e.Row.Foreground = Brushes.White;
+                }
+                else if(c.Numero.StartsWith("3"))
+
+                {
+                    e.Row.Background = Brushes.Yellow;
                 }
             }
         }
